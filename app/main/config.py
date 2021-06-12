@@ -10,7 +10,10 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious_secret_key')
     DEBUG = False
     ALLOWED_ORIGIN = os.getenv('ALLOWED_ORIGIN', '')
-    SCHEDULER_JOBSTORES = {"default": SQLAlchemyJobStore(url='sqlite:///jobs.sqlite')}
+    SCHEDULER_JOBSTORES = {
+        "default": SQLAlchemyJobStore(
+            url='sqlite:///jobs.sqlite')}
+
 
 class DevelopmentConfig(Config):
     # uncomment the line below to use postgres

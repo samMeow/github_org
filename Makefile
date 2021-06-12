@@ -7,7 +7,7 @@ lint:
 	pylint ./app
 
 lint-fix:
-	autopep8 --in-place --aggressive --aggressive ./app/**/*.py
+	autopep8 --in-place --aggressive ./app/**/*.py
 
 run:
 	python manage.py run

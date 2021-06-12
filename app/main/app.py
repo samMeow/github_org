@@ -14,17 +14,20 @@ flask_bcrypt = Bcrypt()
 app = Flask(__name__)
 migrate = Migrate(app, db)
 
+
 def init_docs(app):
     plugins = [FlaskPlugin(), MarshmallowPlugin()]
     spec = APISpec("My api docs", '1.0', "2.0", plugins=plugins)
     template = spec.to_flasgger(app, definitions=Schemas)
     Swagger(app, template=template, parse=True)
 
+
 def with_context(task):
     def run():
         with app.app_context():
             return task()
     return run
+
 
 def create_app(config_name):
     """
@@ -37,6 +40,5 @@ def create_app(config_name):
     init_docs(app)
     scheduler.init_app(app)
     scheduler.start()
-    
-    
+
     return app

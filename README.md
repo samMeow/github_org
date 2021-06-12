@@ -1,23 +1,17 @@
-# InstaPic-backend
-Hosted: http://sammeow-instapic-backend.herokuapp.com/
+# GitHub Orgs Demo
 
 ## Documentation
-http://sammeow-instapic-backend.herokuapp.com/docs/
+//localhost:5000/apidocs/
 
 ## Getting started
 ### Requirement
-`docker-compose` and `pip`
+`docker-compose` or `pipenv` (not gurantee)
 
 ### Start App
 Server will be serving at `localhost:5000`
 ```sh
-docker-compose up -d
-make db-up
-# or only db
-docker-compose up -d instapic-db
-make db-up
-make install
-make run
+make docker-up
+make docker-seed
 ```
 
 ### others
