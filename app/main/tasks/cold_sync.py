@@ -9,9 +9,8 @@ from ..instances import logger, scheduler, db
 from ..model import GithubOrg
 from ..service import GithubService
 
-
-
 def cold_sync():
+    logger.info('Start Cold sync')
     try:
         max_id = GithubOrg.query.with_entities(func.max(GithubOrg.github_id)).scalar() or 0
         q = queue.Queue()
@@ -51,9 +50,10 @@ def cold_sync():
     except Exception as e:
         logger.error(str(e), exc_info=True)
 
+# TODO: move to celery for desire behaviour
 @scheduler.task(
     "interval",
-    id="cold_sync",
+    id="cold_sync_task",
     weeks=1,
     max_instances=1,
     start_date="2000-01-01 00:00:00",

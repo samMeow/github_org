@@ -2,10 +2,6 @@ parameters:
   - name: input
     in: path
     type: string
-  - name: page_size
-    in: path
-    type: number
-    max: 100
 responses:
   200:
     schema:
@@ -14,4 +10,10 @@ responses:
         data:
           type: array
           items:
-            $ref: '#/definitions/GithubOrg'
+            type: object
+            properties:
+              id:
+                type: integer
+              login:
+                type: string
+              

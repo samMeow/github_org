@@ -1,7 +1,7 @@
-.PHONY: tests lint lint-fix run db-up
+.PHONY: test lint lint-fix run db-up
 
-tests:
-	APP_ENV=test python manage.py test
+test:
+	FLASK_APP=manage:app pipenv run flask test
 
 lint:
 	pylint ./app
@@ -24,4 +24,6 @@ docker-up:
 	docker network create dummy || true
 	docker-compose up -d
 
-all: clean install tests run
+.PHONY: docker-seed
+docker-seed:
+	docker-compose exec -d dummy-server sh -c "FLASK_APP=manage:app pipenv run flask cold_sync"

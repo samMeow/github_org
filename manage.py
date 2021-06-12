@@ -29,8 +29,11 @@ def with_context(task):
 @app.cli.command('run')
 def run():
     PORT = os.getenv('PORT', '5000')
-    asyncio.get_event_loop().run_in_executor(None, with_context(cold_sync))
     app.run(host='0.0.0.0', port=PORT)
+
+@app.cli.command('cold_sync')
+def sync():
+    asyncio.get_event_loop().run_in_executor(None, with_context(cold_sync))
 
 
 @app.cli.command('test')

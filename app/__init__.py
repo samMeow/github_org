@@ -1,18 +1,17 @@
-import asyncio
-
 from flask_restful import Api
 from flask import Blueprint, request
 
 from .main.util.error_handler import init_error_handler
 from .main.config import Config
-from .main.controller import GithubOrgResources
+from .main.controller import GithubOrgResources, GithubOrgSearchResource
 
 blueprint = Blueprint('api', __name__)
 
 
 api = Api(blueprint)
 init_error_handler(blueprint)
-api.add_resource(GithubOrgResources, '/github_orgs')
+api.add_resource(GithubOrgResources, '/github_orgs/')
+api.add_resource(GithubOrgSearchResource, '/github_orgs/search/')
 
 @blueprint.after_request
 def after_request(response):
