@@ -1,6 +1,3 @@
-from datetime import datetime
-import asyncio
-
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from apispec.ext.marshmallow import MarshmallowPlugin
@@ -12,7 +9,6 @@ from flask_migrate import Migrate
 from .config import config_by_name
 from .instances import db, ma, scheduler
 from .model import Schemas
-from .tasks import cold_sync
 
 flask_bcrypt = Bcrypt()
 app = Flask(__name__)
@@ -42,5 +38,5 @@ def create_app(config_name):
     scheduler.init_app(app)
     scheduler.start()
     
-    asyncio.get_event_loop().run_in_executor(None, with_context(cold_sync))
+    
     return app
