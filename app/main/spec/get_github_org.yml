@@ -1,0 +1,10 @@
+parameters:
+  - name: input
+    in: path
+    type: string
+responses:
+  200:
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/GithubOrg'

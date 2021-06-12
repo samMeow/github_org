@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+    dummy-db:
+        image: postgres:12
+        container_name: dummy-db
+        ports:
+            - 5432:5432
+        restart: always
+        environment: 
+            POSTGRES_PASSWORD: example
+            POSTGRES_DB: dummy
+            TZ: UTC
+            PGTZ: UTC
+        volumes:
+            - ./pgdata:/var/lib/postgresql/data
+        networks:
+            - dummy-network
+
+    dummy-server:
+        build: .
+        command: sh -c "
+            FLASK_APP=manage:app pipenv run flask db upgrade &&
+            pipenv run gunicorn --bind 0.0.0.0:5000 manage:app --preload"
+        container_name: dummy-server
+        ports:
+            - 5000:5000
+        networks: 
+            - dummy-network
+        volumes:
+            - .:/app
+            - /app/pgdata
+        env_file: .env.docker
+        environment: 
+            PORT: 5000
+            APP_ENV: docker
+
+networks:
+    dummy-network:
+        external: 
+            name: dummy
